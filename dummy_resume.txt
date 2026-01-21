@@ -1,0 +1,5 @@
+John Doe
+Full Stack Developer
+Skills: React, Node.js, TypeScript, Fastify, Tailwind CSS, Gemini AI.
+Experience: 5 years of building scalable web applications.
+Education: Computer Science degree.
