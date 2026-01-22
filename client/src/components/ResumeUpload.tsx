@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import { Upload, FileText, Check, X } from 'lucide-react';
+import { useState } from 'react';
+import type { DragEvent, ChangeEvent } from 'react';
+import { Upload, FileText, X } from 'lucide-react';
 
 interface ResumeUploadProps {
     onUploadSuccess: () => void;
@@ -10,7 +11,7 @@ const ResumeUpload = ({ onUploadSuccess }: ResumeUploadProps) => {
     const [file, setFile] = useState<File | null>(null);
     const [uploading, setUploading] = useState(false);
 
-    const handleDrag = (e: React.DragEvent) => {
+    const handleDrag = (e: DragEvent) => {
         e.preventDefault();
         e.stopPropagation();
         if (e.type === "dragenter" || e.type === "dragover") {
@@ -20,7 +21,7 @@ const ResumeUpload = ({ onUploadSuccess }: ResumeUploadProps) => {
         }
     };
 
-    const handleDrop = (e: React.DragEvent) => {
+    const handleDrop = (e: DragEvent) => {
         e.preventDefault();
         e.stopPropagation();
         setDragActive(false);
@@ -29,7 +30,7 @@ const ResumeUpload = ({ onUploadSuccess }: ResumeUploadProps) => {
         }
     };
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         e.preventDefault();
         if (e.target.files && e.target.files[0]) {
             setFile(e.target.files[0]);

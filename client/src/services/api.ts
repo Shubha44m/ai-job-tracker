@@ -7,7 +7,7 @@ export const jobService = {
         return res.json();
     },
 
-    uploadResume: async (file: File) => {
+    uploadResume: async (_file: File) => {
         // In real implementation, this would POST to /upload
         // For now we just return mock success
         return new Promise(resolve => setTimeout(resolve, 1000));

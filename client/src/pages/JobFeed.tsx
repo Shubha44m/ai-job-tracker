@@ -35,7 +35,7 @@ const JobFeed = () => {
                 jobId: job.id,
                 jobTitle: job.title,
                 company: job.company,
-                status: 'Applied'
+                status: status
             });
         }
         setShowApplyPopup(null);

@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import Layout from './Layout';
 import { Send, Bot, User, Sparkles } from 'lucide-react';
 
@@ -106,8 +106,8 @@ const AIChat = () => {
 
                             <div
                                 className={`max-w-[70%] p-4 rounded-2xl text-sm leading-relaxed shadow-sm ${msg.sender === 'user'
-                                        ? 'bg-blue-600 text-white rounded-tr-none'
-                                        : 'bg-white text-slate-700 border border-slate-100 rounded-tl-none'
+                                    ? 'bg-blue-600 text-white rounded-tr-none'
+                                    : 'bg-white text-slate-700 border border-slate-100 rounded-tl-none'
                                     }`}
                             >
                                 {msg.text}

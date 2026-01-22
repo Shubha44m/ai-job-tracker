@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { authService } from '../services/api';
 import { useAuthStore } from '../store/authStore';
-import { Sparkles, ArrowRight, UserPlus } from 'lucide-react';
+import { ArrowRight, UserPlus } from 'lucide-react';
 
 const Signup = () => {
     const [name, setName] = useState('');

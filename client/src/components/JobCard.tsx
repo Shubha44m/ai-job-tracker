@@ -1,5 +1,5 @@
-import React from 'react';
-import { MapPin, Briefcase, Clock, CheckCircle } from 'lucide-react';
+
+import { MapPin, Briefcase, Clock } from 'lucide-react';
 
 interface Job {
     id: string;
