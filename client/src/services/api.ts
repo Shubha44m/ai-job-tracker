@@ -1,5 +1,6 @@
 // Basic API wrapper
-const API_URL = import.meta.env.VITE_API_URL || (import.meta.env.PROD ? '/api' : 'http://127.0.0.1:3001/api');
+const API_URL = import.meta.env.VITE_API_URL?.replace(/\/$/, '') || (import.meta.env.PROD ? '/api' : 'http://127.0.0.1:3001/api');
+console.log('API_URL:', API_URL);
 
 export const jobService = {
     fetchJobs: async (query: string = 'Software Engineer', location: string = 'London') => {
