@@ -21,8 +21,8 @@ const Login = () => {
             const data = await authService.login({ email, password });
             setAuth(data.token, data.user);
             navigate('/');
-        } catch (err) {
-            setError('Invalid email or password');
+        } catch (err: any) {
+            setError(err.message || 'Invalid email or password');
         } finally {
             setLoading(false);
         }

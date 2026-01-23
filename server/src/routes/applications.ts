@@ -1,15 +1,25 @@
 import { FastifyInstance } from 'fastify';
 
-// Simple in-memory storage for applications
-// In production, use Redis/DB
-let applications: any[] = [];
+import { redisService } from '../services/redis';
 
 export async function applicationRoutes(fastify: FastifyInstance) {
-    fastify.get('/applications', async (request, reply) => {
-        return applications;
+    // Protect all application routes
+    fastify.addHook('onRequest', async (request: any, reply) => {
+        try {
+            await request.jwtVerify();
+        } catch (err) {
+            return reply.code(401).send({ error: 'Unauthorized' });
+        }
+    });
+
+    fastify.get('/applications', async (request: any, reply) => {
+        const userId = request.user.id;
+        const apps = await redisService.getApplications(userId);
+        return apps;
     });
 
     fastify.post('/applications', async (request: any, reply) => {
+        const userId = request.user.id;
         const { jobId, jobTitle, company, status, timestamp } = request.body;
         const newApp = {
             id: Math.random().toString(36).substring(7),
@@ -19,20 +29,20 @@ export async function applicationRoutes(fastify: FastifyInstance) {
             status: status || 'Applied',
             timestamp: timestamp || new Date().toISOString()
         };
-        applications.push(newApp);
+        await redisService.saveApplication(userId, newApp);
         return newApp;
     });
 
     fastify.patch('/applications/:id', async (request: any, reply) => {
+        const userId = request.user.id;
         const { id } = request.params;
         const { status } = request.body;
 
-        const appIndex = applications.findIndex(a => a.id === id);
-        if (appIndex === -1) {
+        const updatedApp = await redisService.updateApplicationStatus(userId, id, status);
+        if (!updatedApp) {
             return reply.code(404).send({ error: 'Application not found' });
         }
 
-        applications[appIndex].status = status;
-        return applications[appIndex];
+        return updatedApp;
     });
 }

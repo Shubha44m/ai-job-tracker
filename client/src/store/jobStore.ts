@@ -30,7 +30,7 @@ interface JobState {
     jobs: Job[];
     applications: Application[];
     loading: boolean;
-    fetchJobs: () => Promise<void>;
+    fetchJobs: (query?: string, location?: string) => Promise<void>;
     matchResume: (resumeText: string) => Promise<void>;
     addApplication: (application: Omit<Application, 'id' | 'date'>) => void;
     updateApplicationStatus: (id: string, status: Application['status']) => void;
@@ -41,10 +41,10 @@ export const useJobStore = create<JobState>((set, get) => ({
     applications: JSON.parse(localStorage.getItem('applications') || '[]'),
     loading: false,
 
-    fetchJobs: async () => {
+    fetchJobs: async (query, location) => {
         set({ loading: true });
         try {
-            const data = await jobService.fetchJobs();
+            const data = await jobService.fetchJobs(query, location);
             set({ jobs: data });
         } finally {
             set({ loading: false });
@@ -54,7 +54,9 @@ export const useJobStore = create<JobState>((set, get) => ({
     matchResume: async (resumeText: string) => {
         set({ loading: true });
         try {
-            const data = await jobService.matchResume(resumeText);
+            // Get current searchTerm if available, otherwise default to Software Engineer
+            const searchTerm = get().jobs[0]?.title || 'Software Engineer';
+            const data = await jobService.matchResume(resumeText, searchTerm);
             set({ jobs: data });
         } finally {
             set({ loading: false });

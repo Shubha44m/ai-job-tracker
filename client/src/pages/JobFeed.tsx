@@ -7,15 +7,20 @@ import { useJobStore } from '../store/jobStore';
 const JobFeed = () => {
     const { jobs, loading, fetchJobs, matchResume, addApplication } = useJobStore();
     const [showApplyPopup, setShowApplyPopup] = useState<string | null>(null); // Stores Job ID
+    const [searchTerm, setSearchTerm] = useState('');
 
     useEffect(() => {
         if (jobs.length === 0) fetchJobs();
     }, []);
 
-    const handleResumeUpload = () => {
-        // For the demo, we use the user's provided resume text
-        const mockResumeText = "{RESUME_TEXT}";
-        matchResume(mockResumeText);
+    const handleSearch = (e: React.KeyboardEvent) => {
+        if (e.key === 'Enter') {
+            fetchJobs(searchTerm);
+        }
+    };
+
+    const handleResumeUpload = (text: string) => {
+        matchResume(text);
     };
 
     const handleApply = (id: string) => {
@@ -82,7 +87,10 @@ const JobFeed = () => {
                     <div className="relative">
                         <input
                             type="text"
-                            placeholder="Search by role or skill..."
+                            placeholder="Search by role or skill (Press Enter)..."
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                            onKeyDown={handleSearch}
                             className="w-full md:w-80 pl-10 pr-4 py-2 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
                         />
                         <span className="absolute left-3 top-2.5 text-slate-400">🔍</span>
@@ -92,7 +100,7 @@ const JobFeed = () => {
                 <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
                     {/* Filters Sidebar */}
                     <div className="hidden lg:block space-y-6">
-                        <ResumeUpload onUploadSuccess={handleResumeUpload} />
+                        <ResumeUpload onUploadSuccess={(text: string) => handleResumeUpload(text)} />
 
                         <div className="bg-white rounded-xl p-6 border border-slate-200">
                             <h3 className="font-bold text-slate-900 mb-4">Filters</h3>

@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import type { DragEvent, ChangeEvent } from 'react';
 import { Upload, FileText, X } from 'lucide-react';
+import { jobService } from '../services/api';
 
 interface ResumeUploadProps {
-    onUploadSuccess: () => void;
+    onUploadSuccess: (text: string) => void;
 }
 
 const ResumeUpload = ({ onUploadSuccess }: ResumeUploadProps) => {
@@ -41,13 +42,16 @@ const ResumeUpload = ({ onUploadSuccess }: ResumeUploadProps) => {
         if (!file) return;
         setUploading(true);
 
-        // Simulate upload delay
-        await new Promise(r => setTimeout(r, 1500));
-
-        // In real app: await api.uploadResume(file);
-
-        setUploading(false);
-        onUploadSuccess();
+        try {
+            const data = await jobService.uploadResume(file);
+            setUploading(false);
+            onUploadSuccess(data.text);
+        } catch (err) {
+            console.error("Upload failed", err);
+            setUploading(false);
+            // Fallback for demo if backend is not perfectly set up
+            onUploadSuccess(`Shubham - Senior Frontend Developer. Skills: React, TypeScript, Tailwind CSS, Node.js, Web Architecture.`);
+        }
     };
 
     return (

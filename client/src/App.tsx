@@ -17,12 +17,20 @@ const RequireAuth = ({ children }: { children: React.ReactElement }) => {
   return children;
 };
 
+const PublicRoute = ({ children }: { children: React.ReactElement }) => {
+  const token = useAuthStore((state) => state.token);
+  if (token) {
+    return <Navigate to="/" replace />;
+  }
+  return children;
+};
+
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
+        <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
+        <Route path="/signup" element={<PublicRoute><Signup /></PublicRoute>} />
 
         <Route path="/" element={
           <RequireAuth>

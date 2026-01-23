@@ -22,8 +22,8 @@ const Signup = () => {
             const data = await authService.signup({ name, email, password });
             setAuth(data.token, data.user);
             navigate('/');
-        } catch (err) {
-            setError('Failed to create account. Email may be taken.');
+        } catch (err: any) {
+            setError(err.message || 'Failed to create account. Email may be taken.');
         } finally {
             setLoading(false);
         }
