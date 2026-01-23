@@ -1,3 +1,4 @@
+import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import JobFeed from './pages/JobFeed';
 import Dashboard from './pages/Dashboard';
