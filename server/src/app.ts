@@ -12,7 +12,7 @@ dotenv.config();
 const app = fastify({ logger: true });
 
 app.register(cors, {
-  origin: ["https://ai-job-tracker-eta.vercel.app"],
+  origin: true,
   methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
   credentials: true
 });
@@ -49,7 +49,8 @@ app.register(authRoutes, { prefix: '/api' });
 app.get('/api', async (request, reply) => {
   return {
     status: 'OK',
-    message: 'AI Job Tracker API is running 🚀'
+    message: 'AI Job Tracker API is running 🚀',
+    redis: (redis as any).status
   };
 });
 
@@ -69,7 +70,7 @@ app.post('/api/chat', async (request: any, reply) => {
 // Export the app for serverless environments (like Vercel)
 export default async (req: any, res: any) => {
   await app.ready();
-  app.server.emit('request', req, res);
+  app(req, res);
 };
 
 // Only start the server if this file is run directly
