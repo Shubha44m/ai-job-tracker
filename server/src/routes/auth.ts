@@ -4,7 +4,7 @@ import bcrypt from 'bcryptjs';
 import { redisService } from '../services/redis';
 
 export async function authRoutes(fastify: FastifyInstance) {
-    fastify.post('/auth/signup', async (request: any, reply) => {
+    fastify.post('/auth/register', async (request: any, reply) => {
         let { name, email, password } = request.body;
         console.log(`Signup attempt: ${email}`);
         email = email?.toLowerCase();

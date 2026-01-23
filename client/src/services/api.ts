@@ -53,7 +53,7 @@ export const authService = {
 
     signup: async (data: any) => {
         try {
-            const res = await fetch(`${API_URL}/auth/signup`, {
+            const res = await fetch(`${API_URL}/auth/register`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(data)
