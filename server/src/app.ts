@@ -24,7 +24,7 @@ const pdf = require('pdf-parse');
 
 app.register(fastifyMultipart);
 
-app.post('/resume/parse', async (request: any, reply) => {
+app.post('/api/resume/parse', async (request: any, reply) => {
   const data = await request.file();
   if (!data) return reply.code(400).send({ error: 'No file uploaded' });
 
@@ -41,15 +41,19 @@ app.post('/resume/parse', async (request: any, reply) => {
   return { text };
 });
 
-app.register(jobRoutes);
-app.register(applicationRoutes);
-app.register(authRoutes);
+app.register(jobRoutes, { prefix: '/api' });
+app.register(applicationRoutes, { prefix: '/api' });
+app.register(authRoutes, { prefix: '/api' });
+
+app.get('/api', async (request, reply) => {
+  return { hello: 'world', api: 'online' };
+});
 
 app.get('/', async (request, reply) => {
   return { hello: 'world' };
 });
 
-app.post('/chat', async (request: any, reply) => {
+app.post('/api/chat', async (request: any, reply) => {
   const { message, context } = request.body;
   const response = await chatWithAI(message, context);
   return { response };
