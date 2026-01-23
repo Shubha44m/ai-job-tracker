@@ -46,11 +46,17 @@ app.register(applicationRoutes, { prefix: '/api' });
 app.register(authRoutes, { prefix: '/api' });
 
 app.get('/api', async (request, reply) => {
-  return { hello: 'world', api: 'online' };
+  return {
+    status: 'OK',
+    message: 'AI Job Tracker API is running 🚀'
+  };
 });
 
 app.get('/', async (request, reply) => {
-  return { hello: 'world' };
+  return {
+    status: 'OK',
+    message: 'AI Job Tracker Backend is running 🚀'
+  };
 });
 
 app.post('/api/chat', async (request: any, reply) => {
