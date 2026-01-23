@@ -12,8 +12,9 @@ dotenv.config();
 const app = fastify({ logger: true });
 
 app.register(cors, {
-  origin: true,
-  methods: ['GET', 'PUT', 'POST', 'DELETE', 'PATCH', 'OPTIONS']
+  origin: ["https://ai-job-tracker-eta.vercel.app"],
+  methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+  credentials: true
 });
 app.register(jwt, {
   secret: process.env.JWT_SECRET || 'supersecretkey123'
