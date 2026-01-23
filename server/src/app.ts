@@ -55,20 +55,26 @@ app.post('/chat', async (request: any, reply) => {
   return { response };
 });
 
-const start = async () => {
-  try {
-    const port = parseInt(process.env.PORT || '3001');
-    await app.listen({ port, host: '0.0.0.0' });
-    console.log(`🚀 Server gracefully running on http://localhost:${port}`);
-  } catch (err: any) {
-    if (err.code === 'EADDRINUSE') {
-      console.error(`❌ Port ${process.env.PORT || '3001'} is already in use.`);
-      console.error(`💡 Try killing the process running on this port or change the PORT in .env`);
-    } else {
-      app.log.error(err);
-    }
-    process.exit(1);
-  }
-};
+// Export the app for serverless environments (like Vercel)
+export default app;
 
-start();
+// Only start the server if this file is run directly
+if (process.env.NODE_ENV !== 'test' && !process.env.VERCEL) {
+  const start = async () => {
+    try {
+      const port = parseInt(process.env.PORT || '3001');
+      await app.listen({ port, host: '0.0.0.0' });
+      console.log(`🚀 Server gracefully running on http://localhost:${port}`);
+    } catch (err: any) {
+      if (err.code === 'EADDRINUSE') {
+        console.error(`❌ Port ${process.env.PORT || '3001'} is already in use.`);
+        console.error(`💡 Try killing the process running on this port or change the PORT in .env`);
+      } else {
+        app.log.error(err);
+      }
+      process.exit(1);
+    }
+  };
+
+  start();
+}
