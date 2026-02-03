@@ -6,6 +6,8 @@ import { jobRoutes } from './routes/jobs';
 import { applicationRoutes } from './routes/applications';
 import { authRoutes } from './routes/auth';
 import { chatWithAI } from './services/ai';
+import { redis } from './services/redis';
+
 
 dotenv.config();
 
@@ -70,8 +72,9 @@ app.post('/api/chat', async (request: any, reply) => {
 // Export the app for serverless environments (like Vercel)
 export default async (req: any, res: any) => {
   await app.ready();
-  app(req, res);
+  app.server.emit('request', req, res);
 };
+
 
 // Only start the server if this file is run directly
 if (process.env.NODE_ENV !== 'test' && !process.env.VERCEL) {
