@@ -70,10 +70,7 @@ app.post('/api/chat', async (request: any, reply) => {
 });
 
 // Export the app for serverless environments (like Vercel)
-export default async (req: any, res: any) => {
-  await app.ready();
-  app.server.emit('request', req, res);
-};
+export default app;
 
 
 // Only start the server if this file is run directly
