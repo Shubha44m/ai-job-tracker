@@ -1,0 +1,28 @@
+services:
+  # Backend Service
+  - type: web
+    name: ai-job-tracker-backend
+    runtime: node
+    rootDir: server
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    envVars:
+      - key: NODE_VERSION
+        value: 22.22.0
+      - key: PORT
+        value: 3001
+      - key: JWT_SECRET
+        fromContext: secret
+      - key: GEMINI_API_KEY
+        fromContext: secret
+
+  # Frontend Service (Optional, if you want to host on Render too)
+  - type: web
+    name: ai-job-tracker-frontend
+    runtime: static
+    rootDir: client
+    buildCommand: npm run build
+    staticPublishPath: dist
+    envVars:
+      - key: VITE_API_URL
+        value: https://ai-job-tracker-backend.onrender.com # Replace with your actual backend URL after first deploy
