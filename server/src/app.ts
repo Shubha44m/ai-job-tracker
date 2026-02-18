@@ -18,6 +18,7 @@ app.register(cors, {
   methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
   credentials: true
 });
+
 app.register(jwt, {
   secret: process.env.JWT_SECRET || 'supersecretkey123'
 });
