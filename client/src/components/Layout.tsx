@@ -1,8 +1,9 @@
+import type { ReactNode } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { LayoutDashboard, Briefcase, MessageSquare, User } from 'lucide-react';
 import { useAuthStore } from '../store/authStore';
 
-const Layout = ({ children }: { children: React.ReactNode }) => {
+const Layout = ({ children }: { children: ReactNode }) => {
     const { pathname } = useLocation();
     const { user } = useAuthStore();
 

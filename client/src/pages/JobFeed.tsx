@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState, type KeyboardEvent } from 'react';
 import Layout from '../components/Layout';
 import JobCard from '../components/JobCard';
 import ResumeUpload from '../components/ResumeUpload';
@@ -13,7 +13,7 @@ const JobFeed = () => {
         if (jobs.length === 0) fetchJobs();
     }, []);
 
-    const handleSearch = (e: React.KeyboardEvent) => {
+    const handleSearch = (e: KeyboardEvent) => {
         if (e.key === 'Enter') {
             fetchJobs(searchTerm);
         }
