@@ -1,10 +1,10 @@
 import { Link, useLocation } from 'react-router-dom';
-import { LayoutDashboard, Briefcase, MessageSquare, LogOut, User } from 'lucide-react';
+import { LayoutDashboard, Briefcase, MessageSquare, User } from 'lucide-react';
 import { useAuthStore } from '../store/authStore';
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
     const { pathname } = useLocation();
-    const { user, logout } = useAuthStore();
+    const { user } = useAuthStore();
 
     const navItems = [
         { icon: <Briefcase />, label: 'Job Feed', path: '/' },
@@ -49,15 +49,9 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
                             </div>
                             <div className="flex-1 min-w-0">
                                 <p className="text-sm font-medium text-slate-900 truncate">{user?.name || 'Guest User'}</p>
-                                <p className="text-xs text-slate-500 truncate">{user?.email || 'Please Sign In'}</p>
+                                <p className="text-xs text-slate-500 truncate">{user?.email || 'Demo Account'}</p>
                             </div>
                         </div>
-                        <button
-                            onClick={logout}
-                            className="mt-3 w-full flex items-center justify-center gap-2 text-xs font-medium text-slate-500 hover:text-red-500 transition-colors py-2"
-                        >
-                            <LogOut size={14} /> Sign Out
-                        </button>
                     </div>
                 </div>
             </aside>
@@ -67,7 +61,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
                 <div className="flex-1 overflow-y-auto p-4 md:p-8 relative">
                     {/* Glassmorphism Background Elements */}
                     <div className="fixed top-0 left-0 w-full h-full pointer-events-none z-[-1] overflow-hidden">
-                        <div className="absolute top-[-10%] right-[-5%] w-[500px] h-[500px] bg-blue-400/10 rounded-full blur-[100px]" />
+                        <div className="absolute top-[-10%] right-[-5%] w-[5000px] h-[500px] bg-blue-400/10 rounded-full blur-[100px]" />
                         <div className="absolute bottom-[-10%] left-[10%] w-[400px] h-[400px] bg-indigo-400/10 rounded-full blur-[100px]" />
                     </div>
 

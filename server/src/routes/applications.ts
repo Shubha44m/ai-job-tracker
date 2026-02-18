@@ -5,11 +5,14 @@ import { redisService } from '../services/redis';
 export async function applicationRoutes(fastify: FastifyInstance) {
     // Protect all application routes
     fastify.addHook('onRequest', async (request: any, reply) => {
-        try {
-            await request.jwtVerify();
-        } catch (err) {
-            return reply.code(401).send({ error: 'Unauthorized' });
-        }
+        // try {
+        //     await request.jwtVerify();
+        // } catch (err) {
+        //     return reply.code(401).send({ error: 'Unauthorized' });
+        // }
+
+        // Mock user for no-login experience
+        request.user = { id: 'guest-user', name: 'Guest User', email: 'guest@example.com' };
     });
 
     fastify.get('/applications', async (request: any, reply) => {
